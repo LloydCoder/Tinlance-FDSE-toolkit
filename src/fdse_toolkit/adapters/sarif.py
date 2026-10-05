@@ -1,6 +1,8 @@
 """Minimal SARIF 2.x result adapter; raw SARIF remains the evidence artifact."""
 from __future__ import annotations
 
+from typing import Any
+
 from .base import AdapterContext, AdapterError
 from .generic_json import normalize_findings
 
