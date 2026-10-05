@@ -107,6 +107,23 @@
     "notes": {
       "type": "string",
       "maxLength": 10000
+    },
+    "risk_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "correlation_key": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "correlated_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "uniqueItems": true
     }
   }
 }
