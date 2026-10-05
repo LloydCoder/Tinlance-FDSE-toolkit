@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from openpyxl import load_workbook
 from docx import Document
+from openpyxl import load_workbook
 
 from fdse_toolkit.reporting import generate_report_bundle
 
