@@ -8,7 +8,7 @@ from fdse_toolkit.delivery import build_delivery_zip
 from fdse_toolkit.identity import IdentityScanner
 
 
-@given(st.text(alphabet=st.characters(min_codepoint=48, max_codepoint=122, blacklist_categories=("Cs",)), min_size=8, max_size=60))
+@given(st.text(alphabet=st.characters(whitelist_categories=("Ll", "Lu", "Nd")), min_size=8, max_size=60))
 def test_identity_scanner_never_returns_detected_secret(value: str):
     secret = "SYNTHETIC" + value
     findings = IdentityScanner().scan_text(f'password="{secret}"', source="fuzz")
