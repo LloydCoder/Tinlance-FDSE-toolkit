@@ -4,8 +4,8 @@ from __future__ import annotations
 import hashlib
 from typing import Any
 
-from .base import AdapterContext, AdapterError, _confidence, _severity
 from ..contracts import validate_document
+from .base import AdapterContext, AdapterError, _confidence, _severity
 
 
 def normalize_findings(payload: dict[str, Any], context: AdapterContext) -> list[dict[str, Any]]:
