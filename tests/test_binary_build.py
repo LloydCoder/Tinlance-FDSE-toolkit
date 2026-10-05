@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from packaging.build_binary import BinaryBuildConfig, build_command
+from build_tools.binary import BinaryBuildConfig, build_command
 
 
 def test_binary_command_is_path_controlled_and_non_shell(tmp_path: Path):
