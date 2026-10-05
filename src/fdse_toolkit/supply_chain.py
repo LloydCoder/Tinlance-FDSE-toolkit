@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import sys
+from pathlib import Path
 from datetime import UTC, datetime
 from importlib.metadata import distributions
 
@@ -44,7 +45,7 @@ def generate_sbom(*, project_name: str = "tinlance-fdse-toolkit", project_versio
 
 
 def write_sbom(output_path, *, project_name: str = "tinlance-fdse-toolkit", project_version: str = "0.1.0.dev0"):
-    output_path = __import__("pathlib").Path(output_path)
+    output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(generate_sbom(project_name=project_name, project_version=project_version), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return output_path
