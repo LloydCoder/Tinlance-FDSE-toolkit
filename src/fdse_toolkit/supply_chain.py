@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib import Path
 from datetime import UTC, datetime
+from pathlib import Path
 from importlib.metadata import distributions
 
 
