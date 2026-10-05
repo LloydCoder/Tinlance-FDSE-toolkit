@@ -21,7 +21,7 @@ def _normalize(text: str) -> str:
 def correlation_key(finding: dict[str, Any]) -> str:
     title = _normalize(str(finding.get("title", "")))
     assets = ",".join(sorted(str(x) for x in finding.get("asset_ids", [])))
-    return hashlib.sha256(f"{title}\0{assets}".encode("utf-8")).hexdigest()
+    return hashlib.sha256(f"{title}\0{assets}".encode()).hexdigest()
  
  
 def prioritization_score(finding: dict[str, Any], asset_criticalities: dict[str, str] | None = None) -> float:
