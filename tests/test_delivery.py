@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from cryptography.exceptions import InvalidTag
 
 from fdse_toolkit.delivery import build_delivery_zip, decrypt_delivery, encrypt_delivery
 
@@ -28,5 +29,5 @@ def test_delivery_wrong_password_and_traversal_fail(tmp_path: Path):
     build_delivery_zip({"report.txt": source}, zip_path)
     encrypted = tmp_path / "delivery.fdse"
     encrypt_delivery(zip_path, encrypted, "correct horse battery staple 123")
-    with pytest.raises(Exception):
+    with pytest.raises(InvalidTag):
         decrypt_delivery(encrypted, tmp_path / "bad.zip", "wrong password completely")
