@@ -40,7 +40,7 @@ class IdentityScanner:
         findings: list[dict[str, Any]] = []
         for pattern in PATTERNS:
             for match in pattern.regex.finditer(text):
-                value = match.group(0)
+                value = match.group(1) if match.lastindex else match.group(0)
                 line = text.count("\n", 0, match.start()) + 1
                 line_start = text.rfind("\n", 0, match.start()) + 1
                 column = match.start() - line_start + 1
