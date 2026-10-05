@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-import subprocess
+import subprocess  # nosec B404 - controlled local build tool; shell execution is disabled
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -45,7 +45,7 @@ def build_binary(config: BinaryBuildConfig) -> Path:
     config.dist_dir.mkdir(parents=True, exist_ok=True)
     config.work_dir.mkdir(parents=True, exist_ok=True)
     config.spec_dir.mkdir(parents=True, exist_ok=True)
-    subprocess.run(command, check=True, shell=False, cwd=config.repo_root, env=env)
+    subprocess.run(command, check=True, shell=False, cwd=config.repo_root, env=env)  # nosec B603 - argv is constructed from repo-controlled validated paths
     output = config.dist_dir / config.name
     if not output.is_file():
         raise RuntimeError(f"PyInstaller did not produce expected binary: {output}")
