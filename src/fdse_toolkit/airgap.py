@@ -6,6 +6,9 @@ import json
 import zipfile
 from pathlib import Path
 
+MAX_BUNDLE_FILES = 10000
+MAX_BUNDLE_UNCOMPRESSED_BYTES = 2 * 1024 * 1024 * 1024
+
 
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -43,16 +46,36 @@ def verify_airgap_bundle(bundle_zip: Path) -> dict:
     bundle_zip = Path(bundle_zip)
     with zipfile.ZipFile(bundle_zip) as archive:
         names = archive.namelist()
+        if len(names) > MAX_BUNDLE_FILES + 1:
+            raise ValueError("air-gap bundle contains too many archive entries")
+        if len(names) != len(set(names)):
+            raise ValueError("air-gap bundle contains duplicate archive names")
         if "AIRGAP-MANIFEST.json" not in names:
             raise ValueError("missing AIRGAP-MANIFEST.json")
         manifest = json.loads(archive.read("AIRGAP-MANIFEST.json"))
-        for item in manifest.get("artifacts", []):
+        artifacts = manifest.get("artifacts", [])
+        if not isinstance(artifacts, list) or len(artifacts) > MAX_BUNDLE_FILES:
+            raise ValueError("invalid air-gap artifact count")
+        total_size = 0
+        seen: set[str] = set()
+        for item in artifacts:
             name = item["path"]
+            if name in seen:
+                raise ValueError(f"duplicate manifest artifact: {name}")
+            seen.add(name)
             if name not in names:
                 raise ValueError(f"missing bundle artifact: {name}")
             if Path(name).is_absolute() or ".." in Path(name).parts:
                 raise ValueError(f"unsafe bundle path: {name}")
+            info = archive.getinfo(name)
+            declared_size = item.get("size_bytes")
+            if not isinstance(declared_size, int) or declared_size < 0 or declared_size != info.file_size:
+                raise ValueError(f"size mismatch: {name}")
+            total_size += info.file_size
+            if total_size > MAX_BUNDLE_UNCOMPRESSED_BYTES:
+                raise ValueError("air-gap bundle exceeds uncompressed size limit")
             data = archive.read(name)
             if hashlib.sha256(data).hexdigest() != item["sha256"]:
+
                 raise ValueError(f"integrity failure: {name}")
     return manifest
