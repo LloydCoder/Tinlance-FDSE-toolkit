@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.tinlance.com/fdse/incident.schema.json",
+  "title": "FDSE Incident",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "incident_id",
+    "category",
+    "severity",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "incident_id": {
+      "type": "string",
+      "pattern": "^INC-[A-Z0-9._-]{3,80}$"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "C2",
+        "CREDENTIAL_THEFT",
+        "LATERAL_MOVEMENT",
+        "RANSOMWARE",
+        "SUPPLY_CHAIN",
+        "AI_AGENT_ABUSE",
+        "OTHER"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "INFO",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "OPEN",
+        "CONTAINED",
+        "ERADICATED",
+        "RECOVERING",
+        "CLOSED",
+        "UNKNOWN"
+      ]
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "regulatory_considerations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "regime",
+          "statement_type"
+        ],
+        "properties": {
+          "regime": {
+            "type": "string"
+          },
+          "statement_type": {
+            "type": "string",
+            "enum": [
+              "LEGAL_REQUIREMENT",
+              "GUIDANCE",
+              "TINLANCE_RECOMMENDATION"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "deadline": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

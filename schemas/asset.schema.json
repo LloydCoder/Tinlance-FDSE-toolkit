@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.tinlance.com/fdse/asset.schema.json",
+  "title": "FDSE Asset",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "asset_id",
+    "kind",
+    "value"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "asset_id": {
+      "type": "string",
+      "pattern": "^AST-[A-Z0-9._-]{3,80}$"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "domain",
+        "subdomain",
+        "ip",
+        "url",
+        "repository",
+        "host",
+        "service",
+        "identity",
+        "cloud_resource",
+        "other"
+      ]
+    },
+    "value": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "criticality": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "DEV",
+        "TEST",
+        "STAGING",
+        "PRODUCTION"
+      ]
+    },
+    "owner_reference": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "source_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

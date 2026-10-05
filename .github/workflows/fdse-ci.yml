@@ -43,5 +43,21 @@ jobs:
         run: |
           fdse --version
           fdse --help
+      - name: Validate schema documents and package mirrors
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('schemas')
+          pkg = Path('src/fdse_toolkit/schemas')
+          for path in sorted(root.glob('*.schema.json')):
+              data = json.loads(path.read_text(encoding='utf-8'))
+              assert data.get('$schema') == 'https://json-schema.org/draft/2020-12/schema', path
+              assert isinstance(data.get('$id'), str) and data['$id'], path
+              mirror = pkg / path.name
+              assert mirror.read_bytes() == path.read_bytes(), mirror
+          PY
+      - name: Run tests
+        run: pytest
       - name: Ruff check
-        run: ruff check src
+        run: ruff check src tests
