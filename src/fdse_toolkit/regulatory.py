@@ -38,7 +38,7 @@ class RegulatoryAssessment:
     notes: str | None = None
 
     def as_dict(self) -> dict:
-        value = {k: v for k, v in self.__dict__.items() if v is not None}
+        value = {"schema_version": "1.0.0", **{k: v for k, v in self.__dict__.items() if v is not None}}
         validate_document("regulatory-assessment", value)
         return value
 
