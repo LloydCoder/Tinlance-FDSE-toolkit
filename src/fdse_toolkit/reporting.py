@@ -76,7 +76,7 @@ def build_pdf(engagement: dict[str, Any], findings: list[dict[str, Any]], output
         Paragraph("TINLANCE FDSE SECURITY ASSESSMENT", styles["Title"]),
         Paragraph(html.escape(client), styles["Heading2"]),
         Paragraph(html.escape(f"Engagement: {engagement['engagement_id']}"), styles["Normal"]),
-        Paragraph(escape(f"Classification: {engagement.get('data_classification', 'CONFIDENTIAL')}"), styles["Normal"]),
+        Paragraph(html.escape(f"Classification: {engagement.get('data_classification', 'CONFIDENTIAL')}"), styles["Normal"]),
         Spacer(1, 12),
         Paragraph("Executive Summary", styles["Heading1"]),
         Paragraph(f"Validated findings: {len(findings)}", styles["Normal"]),
@@ -92,11 +92,11 @@ def build_pdf(engagement: dict[str, Any], findings: list[dict[str, Any]], output
     story.extend([table, Spacer(1, 14), Paragraph("Findings", styles["Heading1"])])
     for finding in findings:
         story.extend([
-            Paragraph(escape(f"{finding['severity']} — {finding['title']}"), styles["Heading2"]),
-            Paragraph(escape(f"Finding ID: {finding['finding_id']}"), styles["Normal"]),
-            Paragraph(escape(f"Confidence: {finding['confidence']:.0%}"), styles["Normal"]),
-            Paragraph(escape(f"Evidence: {', '.join(finding['evidence_ids'])}"), styles["Normal"]),
-            Paragraph(escape(finding.get("description", "") or "No description provided."), styles["BodyText"]),
+            Paragraph(html.escape(f"{finding['severity']} — {finding['title']}"), styles["Heading2"]),
+            Paragraph(html.escape(f"Finding ID: {finding['finding_id']}"), styles["Normal"]),
+            Paragraph(html.escape(f"Confidence: {finding['confidence']:.0%}"), styles["Normal"]),
+            Paragraph(html.escape(f"Evidence: {', '.join(finding['evidence_ids'])}"), styles["Normal"]),
+            Paragraph(html.escape(finding.get("description", "") or "No description provided."), styles["BodyText"]),
             Spacer(1, 8),
         ])
     doc.build(story)
