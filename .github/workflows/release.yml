@@ -4,9 +4,8 @@ on:
     branches: [main]
   push:
     branches: [main]
-  workflow_dispatch:
-  push:
     tags: ["v*"]
+  workflow_dispatch:
 permissions:
   contents: read
   id-token: write
