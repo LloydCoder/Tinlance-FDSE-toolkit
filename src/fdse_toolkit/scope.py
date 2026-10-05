@@ -16,7 +16,7 @@ class Scope:
     excluded_targets: tuple[str, ...] = ()
 
     @classmethod
-    def from_engagement(cls, engagement: dict) -> "Scope":
+    def from_engagement(cls, engagement: dict) -> Scope:
         targets = tuple(engagement["scope"]["authorized_targets"])
         excluded = tuple(engagement["scope"].get("excluded_targets", []))
         if not targets:
