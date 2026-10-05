@@ -12,7 +12,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 
-SCHEMA_DIR = Path(__file__).resolve().parents[2] / "schemas"
+SCHEMA_DIR = Path(__file__).resolve().parent / "schemas"
 
 class ContractValidationError(ValueError):
     """Raised when a canonical FDSE document violates its schema."""
