@@ -7,6 +7,10 @@ import zipfile
 from pathlib import Path
 
 
+MAX_ARTIFACT_BYTES = 256 * 1024 * 1024
+MAX_TOTAL_BYTES = 1024 * 1024 * 1024
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -43,16 +47,30 @@ def verify_airgap_bundle(bundle_zip: Path) -> dict:
     bundle_zip = Path(bundle_zip)
     with zipfile.ZipFile(bundle_zip) as archive:
         names = archive.namelist()
+        if len(names) > 10000:
+            raise ValueError("air-gap bundle contains too many archive entries")
         if "AIRGAP-MANIFEST.json" not in names:
             raise ValueError("missing AIRGAP-MANIFEST.json")
         manifest = json.loads(archive.read("AIRGAP-MANIFEST.json"))
+        total_size = 0
         for item in manifest.get("artifacts", []):
             name = item["path"]
             if name not in names:
                 raise ValueError(f"missing bundle artifact: {name}")
             if Path(name).is_absolute() or ".." in Path(name).parts:
                 raise ValueError(f"unsafe bundle path: {name}")
+            declared_size = int(item["size_bytes"])
+            if declared_size < 0 or declared_size > MAX_ARTIFACT_BYTES:
+                raise ValueError(f"unsafe artifact size: {name}")
+            total_size += declared_size
+            if total_size > MAX_TOTAL_BYTES:
+                raise ValueError("air-gap bundle exceeds total uncompressed size limit")
+            info = archive.getinfo(name)
+            if info.file_size != declared_size:
+                raise ValueError(f"declared size mismatch: {name}")
             data = archive.read(name)
+            if len(data) != declared_size:
+                raise ValueError(f"uncompressed size mismatch: {name}")
             if hashlib.sha256(data).hexdigest() != item["sha256"]:
                 raise ValueError(f"integrity failure: {name}")
     return manifest
