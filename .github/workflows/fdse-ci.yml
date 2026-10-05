@@ -1,0 +1,40 @@
+name: fdse-ci
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: fdse-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  forensic-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Verify baseline archive
+        run: |
+          set -euo pipefail
+          test -f Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip
+          unzip -t Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip >/dev/null
+      - name: Extract and verify manifest
+        run: |
+          set -euo pipefail
+          rm -rf .fdse_extract
+          mkdir .fdse_extract
+          unzip -q Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip -d .fdse_extract
+          cd .fdse_extract
+          sha256sum -c MANIFEST.sha256
+      - name: Compile recovered Python source
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q legacy
+      - name: Verify source recovery
+        run: |
+          set -euo pipefail
+          test -f legacy/README.txt
+          test -f legacy/MANIFEST.sha256
+          test "$(find legacy -name '*.py' -type f | wc -l)" -eq 8
