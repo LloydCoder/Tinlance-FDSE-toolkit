@@ -29,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     validate = sub.add_parser("validate", help="validate a canonical JSON document")
-    validate.add_argument("kind", choices=("engagement", "finding", "evidence", "asset", "incident", "remediation", "regulatory-assessment", "roi-analysis", "delivery-manifest", "report-manifest"))
+    validate.add_argument("kind", choices=("engagement", "finding", "evidence", "asset", "incident", "remediation", "regulatory-assessment", "roi-analysis", "delivery-manifest", "report-manifest", "field-validation"))
     validate.add_argument("file", type=Path)
 
     report = sub.add_parser("report", help="generate PDF/DOCX/XLSX reports")

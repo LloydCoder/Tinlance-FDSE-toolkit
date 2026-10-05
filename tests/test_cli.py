@@ -14,3 +14,13 @@ def test_cli_exposes_field_operations():
             "airgap": ["--verify", "bundle.zip"],
         }[command])
         assert args.command == command
+
+
+def test_cli_validates_field_validation_records():
+    parser = build_parser()
+    args = parser.parse_args([
+        "validate",
+        "field-validation",
+        "examples/field-validation-record.synthetic.json",
+    ])
+    assert args.kind == "field-validation"
