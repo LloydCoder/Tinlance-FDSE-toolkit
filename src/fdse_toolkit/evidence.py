@@ -66,11 +66,21 @@ def _atomic_write(path: Path, data: bytes) -> None:
             handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temp_name, path)
+        last_error: OSError | None = None
+        for _ in range(8):
+            try:
+                os.replace(temp_name, path)
+                last_error = None
+                break
+            except PermissionError as exc:
+                last_error = exc
+                time.sleep(0.05)
+        if last_error is not None:
+            raise last_error
     except BaseException:
         try:
             os.unlink(temp_name)
-        except FileNotFoundError:
+        except (FileNotFoundError, PermissionError):
             pass
         raise
 
