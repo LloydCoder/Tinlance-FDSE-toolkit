@@ -1,48 +1,49 @@
 # Tinlance FDSE Toolkit
 
-**Forward-Deployed Security Engineer field toolkit — private Tinlance engineering system.**
+**Private Forward-Deployed Security Engineer field toolkit for Tinlance Limited.**
 
 ## Purpose
-This repository is the private operating toolkit used by a Tinlance Forward-Deployed Security Engineer to execute authorized customer security engagements. It packages engagement evidence and outputs from specialized Tinlance systems into defensible reports, playbooks, business-impact analysis, secure delivery packages, and offline/air-gapped artifacts.
+This repository is the private operator toolkit used by a Tinlance FDSE (Forward-Deployed Security Engineer) during authorized customer engagements. It turns evidence and structured outputs from the Tinlance security ecosystem into defensible findings, reports, incident playbooks, business-impact analysis, secure delivery packages and offline artifacts.
 
-It is not a customer SaaS, multi-tenant platform, detection engine, compliance authority, or replacement for the Tinlance Agent Platform, ThreatFade, ReconOS, BugFlow, FAS, AI Shield, TwinGuard, or KalevioAI.
+It is not a customer SaaS, detection engine, compliance authority, multi-tenant platform, or replacement for the Tinlance Agent Platform, ThreatFade, ReconOS, BugFlow, FAS, AI Shield, TwinGuard, KalevioAI or other upstream systems.
 
-## Current status
-The historical v2 artifact has been recovered and preserved. The project is undergoing forensic-to-enterprise reconstruction. Historical claims such as 100% complete, fully tested, ROI validation, binary compatibility, secure portal behavior, and regulatory correctness are treated as claims under verification.
+## Operating boundary
+customer authorization → scoped collection → upstream Tinlance systems → canonical engagement data → evidence/provenance → finding correlation → reports/playbooks/ROI → secure delivery → retest → closure
 
-## Engineering sequence
-1. Forensic baseline and evidence freeze — complete
-2. Repository reconstruction — in progress
-3. Engagement/domain contracts
-4. Evidence and provenance
-5. Ecosystem adapters
-6. Finding correlation and risk
-7. Enterprise reporting
-8. Identity scanner hardening
-9. Authorized network assessment
-10. IR playbook engine
-11. Regulatory intelligence
-12. ROI/business-impact engine
-13. Secure delivery
-14. Air-gap mode
-15. Binary/reproducible builds
-16. Supply-chain security/SBOM
-17. Automated tests
-18. Adversarial/security verification
-19. CI/release engineering
-20. FDSE field certification
+The Tinlance Agent Platform remains the governed execution authority. This Toolkit does not duplicate identity, authorization, policy, approvals, runtime, sandbox, secrets, budgets, audit or observability authority.
 
-## Architecture boundary
-Customer authorization -> scoped collection -> specialized Tinlance tools -> canonical engagement data -> evidence/provenance -> finding correlation -> reports/playbooks/ROI -> secure delivery -> retest -> closure.
+## Enterprise reconstruction status
+The recovered historical v2 package is forensic source material, not the current release. Historical statements such as “100% complete”, “zero bugs”, universal ROI validation, binary compatibility, or an expiring download portal are not accepted without evidence.
 
-The Tinlance Agent Platform remains the governed execution authority. The Toolkit does not duplicate identity, authorization, policy, approvals, runtime, sandbox, secrets, budgets, audit, or observability responsibilities.
+The active repository now contains the maintained implementation only. Historical upload artifacts and legacy source copies have been removed from the active tree after reconciliation; their Git history remains the forensic record.
+
+## Maintained capabilities
+- Versioned engagement, evidence, finding, asset, incident, remediation, regulatory and ROI contracts.
+- Evidence provenance and integrity primitives.
+- SARIF/generic JSON adapters for upstream tooling.
+- Deterministic finding correlation and risk prioritization.
+- Validated PDF/DOCX/XLSX report generation.
+- Offline-first identity/secret exposure scanning with redaction and bounded input size.
+- Explicit field-operation scope controls.
+- Governed incident-response playbook generation.
+- Source-backed regulatory assessment records.
+- Assumption-driven ROI analysis with sensitivity analysis.
+- Authenticated AES-256-GCM delivery packages with SHA-256 manifests.
+- Offline/air-gap bundle creation and verification.
+- Controlled PyInstaller binary builds.
+- CycloneDX-style SBOM generation.
+
+## CI gates
+Every pull request to main must pass the functional CI and security CI workflows. The maintained package currently enforces automated tests, property testing and a minimum 70% coverage threshold, plus dependency vulnerability auditing and Bandit static analysis.
+
+Green CI is necessary but not sufficient for enterprise certification. Release certification also requires artifact provenance, signed release metadata, compatibility evidence, operator acceptance and claims reconciliation.
 
 ## Repository layout
-- legacy/ — recovered historical implementation; forensic reference until each component is migrated and tested.
-- src/fdse_toolkit/ — target maintained package namespace.
-- docs/ — architecture, forensic records, references, claims and engineering documentation.
-- Tinlance-FDSE-toolkit/ — preserved historical release artifacts.
-- tests/ — automated tests, added component-by-component after behavior is characterized.
+- src/fdse_toolkit/ — maintained implementation.
+- schemas/ — canonical external JSON schemas.
+- tests/ — maintained automated tests.
+- docs/ — architecture, field operations, forensic audit and release evidence.
+- .github/workflows/ — required CI/security gates.
 
-## Development rule
-Never start a phase by assuming partial implementation is complete. Audit the current implementation, research current standards, implement the smallest complete change, test it, reconcile documentation, and require a green CI gate before the next phase.
+## Engineering rule
+For every phase: audit the current implementation first, research applicable standards/current facts, implement the smallest complete change, test adversarially, reconcile documentation, require green CI, then proceed. Never promote a historical claim to a product claim without evidence.
