@@ -10,10 +10,10 @@ import shutil
 import tempfile
 import time
 import uuid
+from collections.abc import Iterator
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
-from collections.abc import Iterator
 
 from .contracts import validate_document
 
