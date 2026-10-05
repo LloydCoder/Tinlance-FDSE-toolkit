@@ -74,8 +74,10 @@ def verify_airgap_bundle(bundle_zip: Path) -> dict:
             total_size += info.file_size
             if total_size > MAX_BUNDLE_UNCOMPRESSED_BYTES:
                 raise ValueError("air-gap bundle exceeds uncompressed size limit")
-            data = archive.read(name)
-            if hashlib.sha256(data).hexdigest() != item["sha256"]:
-
+            digest = hashlib.sha256()
+            with archive.open(name, "r") as handle:
+                while chunk := handle.read(1024 * 1024):
+                    digest.update(chunk)
+            if digest.hexdigest() != item["sha256"]:
                 raise ValueError(f"integrity failure: {name}")
     return manifest

@@ -1,14 +1,25 @@
-# Repository Reconstruction Map
+# Repository Map
 
-| Historical component | Forensic location | Target ownership |
-|---|---|---|
-| Report Generator | legacy/v1_components/report_generator.py | src/fdse_toolkit/reporting/ |
-| GUI launcher | legacy/v1_components/toolkit_gui.py | src/fdse_toolkit/cli.py and field UI tooling |
-| Air-gap builder | legacy/v1_components/build_airgap_bundle.py | src/fdse_toolkit/airgap/ |
-| IR Playbook | legacy/new_components/ir_playbook/ir_playbook.py | src/fdse_toolkit/playbooks/ |
-| ROI Calculator | legacy/new_components/roi_calculator/roi_calculator.py | src/fdse_toolkit/roi/ |
-| Identity Scanner | legacy/new_components/identity_scanner/identity_scanner.py | src/fdse_toolkit/identity/ |
-| Remote Delivery | legacy/new_components/remote_portal/remote_delivery.py | src/fdse_toolkit/delivery/ |
-| Binary Builder | legacy/new_components/binaries/build_binaries.py | packaging/ and release tooling |
+The active repository contains maintained implementation only. Historical source and upload artifacts were removed from the active tree after forensic reconciliation; Git history remains the evidence record.
 
-The legacy tree is forensic reference. Target modules must not silently copy unverified claims or insecure behavior.
+| Capability | Maintained location |
+|---|---|
+| Canonical contracts | src/fdse_toolkit/contracts.py + schemas/ |
+| Evidence and chain of custody | src/fdse_toolkit/evidence.py |
+| Ecosystem adapters | src/fdse_toolkit/adapters/ |
+| Finding correlation and risk | src/fdse_toolkit/risk.py |
+| Enterprise reports | src/fdse_toolkit/reporting.py |
+| Identity exposure | src/fdse_toolkit/identity/ |
+| Field scope controls | src/fdse_toolkit/scope.py |
+| Incident playbooks | src/fdse_toolkit/playbooks.py |
+| Regulatory assessments | src/fdse_toolkit/regulatory.py |
+| ROI/business impact | src/fdse_toolkit/roi.py |
+| Secure delivery | src/fdse_toolkit/delivery.py |
+| Air-gap bundles | src/fdse_toolkit/airgap.py |
+| Binary build control | src/fdse_toolkit/build_binary.py |
+| SBOM generation | src/fdse_toolkit/supply_chain.py |
+| Operator CLI | src/fdse_toolkit/cli.py |
+| External schemas | schemas/ |
+| Automated tests | tests/ |
+| CI/security/release | .github/workflows/ |
+| Engineering/field documentation | docs/ |
