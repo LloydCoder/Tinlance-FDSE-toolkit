@@ -4,12 +4,12 @@ from __future__ import annotations
  
 import hashlib
 import json
+import html
 import re
 from collections.abc import Iterable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from xml.sax.saxutils import escape
  
 from docx import Document
 from docx.shared import Inches, Pt
@@ -74,7 +74,7 @@ def build_pdf(engagement: dict[str, Any], findings: list[dict[str, Any]], output
     styles = getSampleStyleSheet()
     story = [
         Paragraph("TINLANCE FDSE SECURITY ASSESSMENT", styles["Title"]),
-        Paragraph(escape(client), styles["Heading2"]),
+        Paragraph(html.escape(client), styles["Heading2"]),
         Paragraph(escape(f"Engagement: {engagement['engagement_id']}"), styles["Normal"]),
         Paragraph(escape(f"Classification: {engagement.get('data_classification', 'CONFIDENTIAL')}"), styles["Normal"]),
         Spacer(1, 12),
