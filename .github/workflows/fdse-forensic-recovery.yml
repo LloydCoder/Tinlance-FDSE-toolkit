@@ -8,18 +8,19 @@ permissions:
   contents: write
 jobs:
   recover-and-verify:
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source branch
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
       - name: Verify recovered baseline archive
         shell: bash
         run: |
           set -euo pipefail
           test -f Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip
           unzip -t Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip >/dev/null
-      - name: Recover legacy implementation on PR branch
+      - name: Recover legacy implementation
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
@@ -35,14 +36,13 @@ jobs:
           cp .fdse_extract/MANIFEST.sha256 legacy/MANIFEST.sha256
           rm -rf .fdse_extract
           python3 -m compileall -q legacy
-          if git diff --quiet -- legacy; then
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add legacy
-          git commit -m "chore: recover legacy FDSE Toolkit source"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: recover legacy FDSE Toolkit source"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
       - name: Verify recovered source
         shell: bash
         run: |
@@ -50,4 +50,5 @@ jobs:
           test -d legacy/new_components
           test -d legacy/v1_components
           python3 -m compileall -q legacy
-          find legacy -type f | sort
+          test -f legacy/README.txt
+          test -f legacy/MANIFEST.sha256
