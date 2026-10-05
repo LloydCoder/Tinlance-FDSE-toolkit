@@ -5,11 +5,11 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from xml.sax.saxutils import escape
-from datetime import UTC, datetime
 from collections.abc import Iterable
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from xml.sax.saxutils import escape
  
 from docx import Document
 from docx.shared import Inches, Pt
