@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date
 from urllib.parse import urlparse
 
 from .contracts import validate_document
