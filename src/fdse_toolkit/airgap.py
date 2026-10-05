@@ -4,7 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import zipfile
-from pathlib import Path
+from pathlib import Path  # noqa: I001
 
 
 MAX_ARTIFACT_BYTES = 256 * 1024 * 1024
