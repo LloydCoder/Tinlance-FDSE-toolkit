@@ -1,0 +1,35 @@
+name: forensic-bootstrap
+on:
+  push:
+    branches: ["forensic-hardening"]
+permissions:
+  contents: write
+jobs:
+  extract-legacy-sources:
+    if: "!contains(github.event.head_commit.message, 'chore: extract legacy sources')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify baseline archive
+        run: |
+          test -f Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip
+          unzip -t Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip
+      - name: Extract source and release metadata
+        run: |
+          rm -rf .fdse_extract
+          mkdir .fdse_extract
+          unzip -q Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip -d .fdse_extract
+          rm -rf legacy
+          mkdir -p legacy
+          cp -R .fdse_extract/new_components legacy/new_components
+          cp -R .fdse_extract/v1_components legacy/v1_components
+          cp .fdse_extract/README.txt legacy/README.txt
+          cp .fdse_extract/MANIFEST.sha256 legacy/MANIFEST.sha256
+          rm -rf .fdse_extract
+      - name: Commit extracted source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add legacy
+          git commit -m "chore: extract legacy sources from forensic baseline"
+          git push
