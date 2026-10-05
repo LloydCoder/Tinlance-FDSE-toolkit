@@ -13,6 +13,6 @@ Historical claims from the recovered package are not release evidence unless ind
 | Ubuntu/Debian binary support | Not claimed | Source package has compatibility evidence; binary targets require clean-environment artifact testing and provenance. |
 | Five-document automated delivery | Narrowed | Current maintained report core produces PDF/DOCX/XLSX plus manifest; other engagement artifacts are separate operator workflows. |
 | Enterprise source-package portability | Supported with evidence | Linux/Windows/macOS and Python 3.11–3.14 compatibility workflow is green. |
-| Release provenance | Implemented in release workflow | Tagged releases invoke GitHub build-provenance attestation; an actual production release tag must still be used before claiming a signed production release. |
+| Release provenance | Implemented in release workflow | Tagged releases invoke GitHub build-provenance attestation; an actual production release tag must still be used before claiming a signed production release. |\n| Field validation | Defined, synthetic-ready | Phase 25 adds a versioned field-validation contract, measurable acceptance criteria and a pilot runbook. Real customer validation requires an authorized pilot. |
 
 This register is normative for product and sales language. Do not publish superseded historical claims as current Toolkit capabilities.
