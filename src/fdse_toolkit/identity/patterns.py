@@ -26,7 +26,7 @@ PATTERNS = (
     _p("aws_secret_access_key", r"(?i)(?:aws[_-]?secret(?:[_-]?access)?[_-]?key|secret[_-]?access[_-]?key)\s*[:=]\s*['\"]?([A-Za-z0-9/+=]{40})", "CRITICAL", .92, "AWS secret access key assignment"),
     _p("github_personal_access_token", r"\bgh[pousr]_[A-Za-z0-9]{20,255}\b", "CRITICAL", .98, "GitHub token"),
     _p("stripe_secret_key", r"\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b", "CRITICAL", .96, "Stripe secret API key"),
-    _p("paystack_secret_key", r"\bsk_(?:live|test)_[A-Za-z0-9]{10,}\b", "CRITICAL", .80, "Paystack secret API key; validate provider context before escalation"),
+    _p("paystack_secret_key", r"(?i)\bpaystack(?:_secret)?(?:_key)?\b\s*[:=]\s*['\"](sk_(?:live|test)_[A-Za-z0-9]{10,})['\"]", "CRITICAL", .96, "Paystack secret API key in explicit provider context"),
     _p("flutterwave_secret_key", r"\bFLWSECK[-_][A-Za-z0-9_-]{10,}\b", "CRITICAL", .93, "Flutterwave secret key"),
     _p("twilio_account_sid", r"\bAC[a-f0-9]{32}\b", "HIGH", .90, "Twilio account SID"),
     _p("sendgrid_api_key", r"\bSG\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{16,}\b", "CRITICAL", .96, "SendGrid API key"),
