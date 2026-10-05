@@ -10,17 +10,22 @@ concurrency:
   group: fdse-ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  forensic-baseline:
+  baseline-and-package:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
       - name: Verify baseline archive
         run: |
           set -euo pipefail
           test -f Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip
           unzip -t Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip >/dev/null
-      - name: Extract and verify manifest
+      - name: Verify historical manifest
         run: |
           set -euo pipefail
           rm -rf .fdse_extract
@@ -28,13 +33,15 @@ jobs:
           unzip -q Tinlance-FDSE-toolkit/Tinlance_FDSE_Toolkit_v2.0.0_COMPLETE.zip -d .fdse_extract
           cd .fdse_extract
           sha256sum -c MANIFEST.sha256
-      - name: Compile recovered Python source
+      - name: Install maintained package
+        run: python -m pip install .
+      - name: Install quality tools
+        run: python -m pip install "pytest>=8,<9" "ruff>=0.13,<1"
+      - name: Compile all recovered Python
+        run: python -m compileall -q legacy src
+      - name: CLI smoke test
         run: |
-          set -euo pipefail
-          python3 -m compileall -q legacy
-      - name: Verify source recovery
-        run: |
-          set -euo pipefail
-          test -f legacy/README.txt
-          test -f legacy/MANIFEST.sha256
-          test "$(find legacy -name '*.py' -type f | wc -l)" -eq 8
+          fdse --version
+          fdse --help
+      - name: Ruff check
+        run: ruff check src
