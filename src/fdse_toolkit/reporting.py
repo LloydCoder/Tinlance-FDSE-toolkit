@@ -7,8 +7,9 @@ import json
 import re
 from xml.sax.saxutils import escape
 from datetime import UTC, datetime
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
  
 from docx import Document
 from docx.shared import Inches, Pt
@@ -49,7 +50,7 @@ def _validate_engagement(data: dict[str, Any]) -> dict[str, Any]:
         # Full finding objects are accepted by generate_report_bundle; IDs are
         # only relationship references and are not resolved here.
         if not isinstance(finding_id, str):
-            raise ValueError("finding_ids must contain strings")
+            raise TypeError("finding_ids must contain strings")
     return data
  
  
