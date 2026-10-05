@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.tinlance.com/fdse/field-validation.schema.json",
+  "title": "FDSE Field Validation Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "validation_id", "engagement_id", "environment", "operator", "authorization", "scenario", "acceptance", "artifacts", "disposition"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "validation_id": {"type": "string", "pattern": "^FVAL-[A-Z0-9][A-Z0-9._-]{2,63}$"},
+    "engagement_id": {"type": "string", "pattern": "^FDSE-[A-Z0-9][A-Z0-9._-]{2,63}$"},
+    "environment": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "synthetic"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["synthetic", "customer", "internal"]},
+        "synthetic": {"type": "boolean"},
+        "platforms": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "notes": {"type": "string", "maxLength": 2000}
+      }
+    },
+    "operator": {
+      "type": "object", "additionalProperties": false, "required": ["name", "role"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 200},
+        "role": {"type": "string", "enum": ["FDSE", "REVIEWER", "OBSERVER"]}
+      }
+    },
+    "authorization": {
+      "type": "object", "additionalProperties": false, "required": ["status", "reference"],
+      "properties": {
+        "status": {"type": "string", "enum": ["AUTHORIZED", "SYNTHETIC", "NOT_AUTHORIZED"]},
+        "reference": {"type": "string", "minLength": 1, "maxLength": 500},
+        "scope_confirmed": {"type": "boolean"}
+      }
+    },
+    "scenario": {
+      "type": "object", "additionalProperties": false, "required": ["name", "objectives"],
+      "properties": {
+        "name": {"type": "string", "minLength": 3, "maxLength": 300},
+        "objectives": {"type": "array", "items": {"type": "string", "minLength": 3}, "minItems": 1, "uniqueItems": true},
+        "constraints": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "acceptance": {
+      "type": "object", "additionalProperties": false, "required": ["criteria"],
+      "properties": {
+        "criteria": {
+          "type": "array", "minItems": 1, "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["id", "result", "evidence"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^AC-[0-9]{2}$"},
+              "result": {"type": "string", "enum": ["PASS", "FAIL", "PARTIAL", "NOT_RUN"]},
+              "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+              "notes": {"type": "string", "maxLength": 3000}
+            }
+          }
+        },
+        "operator_minutes": {"type": "integer", "minimum": 0},
+        "reviewer_minutes": {"type": "integer", "minimum": 0}
+      }
+    },
+    "artifacts": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "kind", "sha256"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1, "maxLength": 255},
+          "kind": {"type": "string", "enum": ["report", "playbook", "roi", "delivery_package", "airgap_bundle", "evidence", "test_record", "other"]},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "notes": {"type": "string", "maxLength": 1000}
+        }
+      }
+    },
+    "disposition": {
+      "type": "object", "additionalProperties": false, "required": ["status", "next_action"],
+      "properties": {
+        "status": {"type": "string", "enum": ["PASS", "CONDITIONAL_PASS", "FAIL", "REQUIRES_RETEST"]},
+        "next_action": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "customer_acceptance_reference": {"type": "string", "maxLength": 500}
+      }
+    },
+    "validated_at": {"type": "string", "format": "date-time"}
+  }
+}
