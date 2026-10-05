@@ -46,7 +46,8 @@ jobs:
           test -s dist/fdse-toolkit.sbom.json
           test -s dist/SHA256SUMS
           ls -1 dist/*.whl dist/*.tar.gz
-          sha256sum -c dist/SHA256SUMS
+          cd dist
+          sha256sum -c SHA256SUMS
       - name: Upload release evidence
         uses: actions/upload-artifact@v4
         with:
