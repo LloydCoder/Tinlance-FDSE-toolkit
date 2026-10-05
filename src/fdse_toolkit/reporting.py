@@ -75,7 +75,7 @@ def build_pdf(engagement: dict[str, Any], findings: list[dict[str, Any]], output
     story = [
         Paragraph("TINLANCE FDSE SECURITY ASSESSMENT", styles["Title"]),
         Paragraph(html.escape(client), styles["Heading2"]),
-        Paragraph(escape(f"Engagement: {engagement['engagement_id']}"), styles["Normal"]),
+        Paragraph(html.escape(f"Engagement: {engagement['engagement_id']}"), styles["Normal"]),
         Paragraph(escape(f"Classification: {engagement.get('data_classification', 'CONFIDENTIAL')}"), styles["Normal"]),
         Spacer(1, 12),
         Paragraph("Executive Summary", styles["Heading1"]),
