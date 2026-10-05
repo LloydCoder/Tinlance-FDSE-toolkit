@@ -11,7 +11,7 @@ requires-python = ">=3.11,<4"
 license = {text = "Proprietary"}
 authors = [{name = "Tinlance Limited"}]
 classifiers = ["Development Status :: 3 - Alpha", "Intended Audience :: Information Technology", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: 3.13", "Programming Language :: Python :: 3.14"]
-dependencies = ["openpyxl>=3.1.5,<4", "python-docx>=1.2.0,<2", "reportlab>=5.0.1,<6", "scapy>=2.8.0,<3", "jsonschema>=4.26,<5", "cryptography>=46,<47"]
+dependencies = ["openpyxl>=3.1.5,<4", "python-docx>=1.2.0,<2", "reportlab>=5.0.1,<6", "scapy>=2.8.0,<3", "jsonschema>=4.26,<5", "cryptography>=50,<51"]
 
 [project.scripts]
 fdse = "fdse_toolkit.cli:main"
