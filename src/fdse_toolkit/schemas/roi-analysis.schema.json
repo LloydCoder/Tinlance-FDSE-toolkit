@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.tinlance.com/fdse/roi-analysis.schema.json",
+  "title": "FDSE ROI Analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "analysis_id",
+    "investment_usd",
+    "baseline_annual_loss_usd",
+    "risk_reduction_assumption",
+    "expected_loss_avoided_usd",
+    "roi_multiple"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "analysis_id": {
+      "type": "string",
+      "pattern": "^ROI-[A-Z0-9._-]{3,80}$"
+    },
+    "investment_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "baseline_annual_loss_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "risk_reduction_assumption": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "expected_loss_avoided_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "roi_multiple": {
+      "type": "number"
+    },
+    "payback_months": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "benchmark_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "year",
+          "url"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "metric": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sensitivity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "risk_reduction",
+          "expected_loss_avoided_usd",
+          "roi_multiple"
+        ],
+        "properties": {
+          "risk_reduction": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "expected_loss_avoided_usd": {
+            "type": "number",
+            "minimum": 0
+          },
+          "roi_multiple": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
