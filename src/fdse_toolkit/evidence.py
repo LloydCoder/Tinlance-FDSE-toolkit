@@ -11,15 +11,15 @@ import tempfile
 import time
 import uuid
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Iterator
+from collections.abc import Iterator
 
 from .contracts import validate_document
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    return datetime.now(UTC).isoformat().replace("+00:00", "Z")
 
 
 def canonical_json(value: object) -> bytes:
