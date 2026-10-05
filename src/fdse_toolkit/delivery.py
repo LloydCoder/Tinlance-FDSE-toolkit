@@ -18,6 +18,7 @@ SCRYPT_N = 2**15
 SCRYPT_R = 8
 SCRYPT_P = 1
 MAX_PASSWORD_BYTES = 1024
+MAX_DELIVERY_ZIP_BYTES = 1024 * 1024 * 1024
 
 
 def _sha256(path: Path) -> str:
@@ -48,8 +49,10 @@ def build_delivery_zip(artifacts: dict[str, Path], output_zip: Path) -> dict:
         path = Path(path)
         if not path.is_file() or path.is_symlink():
             raise ValueError(f"artifact must be a regular file: {path}")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("delivery name must be a non-empty string")
         safe_name = Path(name)
-        if safe_name.is_absolute() or ".." in safe_name.parts or str(safe_name) in seen_names:
+        if safe_name.is_absolute() or ".." in safe_name.parts or str(safe_name) in ("", ".") or str(safe_name) in seen_names:
             raise ValueError(f"unsafe or duplicate delivery name: {name}")
         seen_names.add(str(safe_name))
         manifest.append({"name": str(safe_name), "sha256": _sha256(path), "size_bytes": path.stat().st_size})
@@ -62,7 +65,10 @@ def build_delivery_zip(artifacts: dict[str, Path], output_zip: Path) -> dict:
 
 
 def encrypt_delivery(zip_path: Path, encrypted_path: Path, password: str) -> dict:
-    plaintext = Path(zip_path).read_bytes()
+    zip_path = Path(zip_path)
+    if zip_path.stat().st_size > MAX_DELIVERY_ZIP_BYTES:
+        raise ValueError("delivery package exceeds maximum supported size")
+    plaintext = zip_path.read_bytes()
     salt = os.urandom(SALT_BYTES)
     nonce = os.urandom(NONCE_BYTES)
     metadata = {
