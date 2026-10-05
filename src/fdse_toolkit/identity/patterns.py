@@ -4,8 +4,8 @@ Provider formats change. These patterns are detection hints, not proof of validi
 Validity checks are intentionally disabled in the base scanner to avoid outbound
 calls with customer-derived credentials.
 """
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
