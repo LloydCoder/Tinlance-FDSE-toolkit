@@ -31,12 +31,12 @@ The active repository now contains the maintained implementation only. Historica
 - Authenticated AES-256-GCM delivery packages with SHA-256 manifests.
 - Offline/air-gap bundle creation and verification.
 - Controlled PyInstaller binary builds.
-- CycloneDX-style SBOM generation.
+- CycloneDX-style SBOM generation.\n- Formal synthetic-to-field validation records and pilot runbook.
 
 ## CI gates
 Every pull request to main must pass the functional CI and security CI workflows. The maintained package currently enforces automated tests, property testing and a minimum 70% coverage threshold, plus dependency vulnerability auditing and Bandit static analysis.
 
-Green CI is necessary but not sufficient for enterprise certification. Release certification also requires artifact provenance, signed release metadata, compatibility evidence, operator acceptance and claims reconciliation.
+Green CI is necessary but not sufficient for enterprise certification. Field validation is now a separate evidence gate: engineering-ready → synthetic-validated → field-piloted → field-proven → production-certified. Release certification also requires artifact provenance, signed release metadata, compatibility evidence, operator acceptance and claims reconciliation.
 
 ## Repository layout
 - src/fdse_toolkit/ — maintained implementation.
