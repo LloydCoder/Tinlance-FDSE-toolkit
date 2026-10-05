@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "validation_id": "FVAL-SYNTHETIC-001",
+  "engagement_id": "FDSE-SYNTHETIC-001",
+  "environment": {
+    "kind": "synthetic",
+    "synthetic": true,
+    "platforms": ["Linux", "Windows", "GitHub"],
+    "notes": "Non-customer dry run. No real credentials or customer data."
+  },
+  "operator": {
+    "name": "Synthetic Operator",
+    "role": "FDSE"
+  },
+  "authorization": {
+    "status": "SYNTHETIC",
+    "reference": "SYNTHETIC-TEST-AUTHORIZATION",
+    "scope_confirmed": true
+  },
+  "scenario": {
+    "name": "Evidence-to-delivery FDSE dry run",
+    "objectives": [
+      "Validate evidence-to-finding traceability",
+      "Validate report and playbook generation",
+      "Validate secure and offline delivery paths"
+    ],
+    "constraints": [
+      "Synthetic data only",
+      "No network target discovery",
+      "No customer data"
+    ]
+  },
+  "acceptance": {
+    "criteria": [
+      {"id": "AC-01", "result": "PASS", "evidence": ["synthetic-scope-record"]},
+      {"id": "AC-02", "result": "PASS", "evidence": ["synthetic-evidence-record"]},
+      {"id": "AC-03", "result": "PASS", "evidence": ["synthetic-finding-record"]},
+      {"id": "AC-04", "result": "PASS", "evidence": ["synthetic-correlation-run"]},
+      {"id": "AC-05", "result": "PASS", "evidence": ["synthetic-report-manifest"]},
+      {"id": "AC-06", "result": "PASS", "evidence": ["synthetic-playbook-output"]},
+      {"id": "AC-07", "result": "PASS", "evidence": ["synthetic-roi-analysis"]},
+      {"id": "AC-08", "result": "PASS", "evidence": ["synthetic-delivery-verification"]},
+      {"id": "AC-09", "result": "PASS", "evidence": ["synthetic-airgap-verification"]},
+      {"id": "AC-10", "result": "PASS", "evidence": ["synthetic-data-handling-review"]},
+      {"id": "AC-11", "result": "PASS", "evidence": ["synthetic-closeout-record"]},
+      {"id": "AC-12", "result": "PASS", "evidence": ["synthetic-operator-review"]}
+    ],
+    "operator_minutes": 90,
+    "reviewer_minutes": 30
+  },
+  "artifacts": [
+    {
+      "name": "synthetic-report-manifest.json",
+      "kind": "test_record",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "disposition": {
+    "status": "PASS",
+    "next_action": "Proceed to an authorized pilot; this synthetic record does not constitute customer validation."
+  },
+  "validated_at": "2026-10-05T10:00:00Z"
+}
