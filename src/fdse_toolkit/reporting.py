@@ -202,5 +202,6 @@ def generate_report_bundle(
         "artifacts": artifacts,
         "finding_count": len(normalized),
     }
+    validate_document("report-manifest", manifest)
     (out / "report_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return manifest
