@@ -61,16 +61,27 @@ def _atomic_write(path: Path, data: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
-        os.fchmod(fd, 0o600)
+        if hasattr(os, "fchmod"):
+            os.fchmod(fd, 0o600)
         with os.fdopen(fd, "wb") as handle:
             handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temp_name, path)
+        last_error: OSError | None = None
+        for _ in range(8):
+            try:
+                os.replace(temp_name, path)
+                last_error = None
+                break
+            except PermissionError as exc:
+                last_error = exc
+                time.sleep(0.05)
+        if last_error is not None:
+            raise last_error
     except BaseException:
         try:
             os.unlink(temp_name)
-        except FileNotFoundError:
+        except (FileNotFoundError, PermissionError):
             pass
         raise
 
