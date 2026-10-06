@@ -1,0 +1,99 @@
+# Tinlance FDSE Toolkit — Machine-readable project context
+
+## Identity
+Name: Tinlance FDSE Toolkit
+Repository: LloydCoder/Tinlance-FDSE-toolkit
+Owner: Tinlance Limited
+Primary language: Python
+Supported Python: 3.11–3.14 in the maintained compatibility matrix
+Visibility: Public repository
+License: Proprietary; all rights reserved
+
+## Product role
+The Toolkit is a private operator system for Forward-Deployed Security Engineering. It is the downstream field-delivery layer used to turn governed evidence and upstream security-system outputs into customer-ready artifacts.
+
+## Non-goals
+The Toolkit is not:
+- a customer SaaS
+- a multi-tenant security platform
+- a detection engine
+- a compliance authority
+- an authorization system
+- a general-purpose remote execution runtime
+- a replacement for the Tinlance Agent Platform
+
+## Architecture boundary
+The Tinlance Agent Platform owns governed execution authority including identity, authorization, policy, approvals, runtime, tools/MCP, sandboxing, secrets, budgets, evidence/audit and observability. The FDSE Toolkit consumes governed inputs and owns field-delivery semantics.
+
+## Maintained capabilities
+- canonical JSON contracts
+- evidence provenance/integrity
+- SARIF/generic JSON adapters
+- deterministic finding correlation
+- PDF/DOCX/XLSX report generation
+- bounded identity/secret exposure scanning
+- explicit field-scope controls
+- incident-response playbook generation
+- source-backed regulatory assessment records
+- assumption-driven ROI analysis
+- AES-256-GCM delivery packages with SHA-256 manifests
+- air-gap bundle creation and verification
+- controlled binary build tooling
+- SBOM/dependency/release evidence
+- bounded operator CLI
+- synthetic-to-field validation records
+
+## CLI
+Commands:
+- fdse validate
+- fdse report
+- fdse playbook
+- fdse scan-file
+- fdse roi
+- fdse package
+- fdse airgap
+
+The CLI does not discover targets, expand scope, grant authorization or execute arbitrary customer code.
+
+## Operational model
+1. Establish authorization and scope.
+2. Intake approved evidence.
+3. Validate contracts and provenance.
+4. Correlate findings.
+5. Generate deliverables.
+6. Verify secure/offline delivery.
+7. Independently review material findings where applicable.
+8. Handoff and record acceptance.
+9. Retest or close.
+
+## Evidence and claims
+Every material finding should trace to supporting evidence. Synthetic evidence must be marked synthetic. Customer evidence must never be committed to the public repository.
+
+Historical claims such as universal ROI, blanket detection metrics, binary compatibility or an expiring hosted portal are not current product claims unless independently evidenced.
+
+## Release states
+ENGINEERING-READY
+SYNTHETIC-VALIDATED
+FIELD-PILOTED
+FIELD-PROVEN
+PRODUCTION-CERTIFIED
+
+## Authoritative documents
+- README.md
+- docs/index.md
+- docs/repository-map.md
+- docs/field-validation-standard.md
+- docs/field-pilot-runbook.md
+- docs/claims-register.md
+- docs/final-forensic-audit.md
+- docs/phase-20-operator-cli.md
+- docs/phase-21-adversarial-hardening.md
+- docs/phase-22-compatibility.md
+- docs/phase-24-continuous-compatibility.md
+- SECURITY.md
+- CONTRIBUTING.md
+- SUPPORT.md
+- LICENSE
+
+## Ecosystem context
+The Toolkit can consume outputs from Tinlance security engineering systems including Tinlance Agent Platform, Tinlance FDSE, ThreatFade, ReconOS, BugFlow and FAS. Each system retains its own domain authority.
