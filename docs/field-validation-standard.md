@@ -4,7 +4,7 @@
 
 Phase 25 changes the release question from **"does the software pass CI?"** to **"can an authorized FDSE use the software to complete a realistic engagement workflow and produce defensible customer artifacts?"**
 
-This standard is deliberately separate from engineering CI. NIST SP 800-61 Rev. 3 treats incident response as part of broader cybersecurity risk management, while current professional testing guidance expects findings to be technically actionable, expressed in business context, supported by evidence, and delivered securely. The FDSE Toolkit therefore requires operational evidence before claiming field validation. citeturn0search3turn0search49
+This standard is deliberately separate from engineering CI. Incident response and professional security testing require operational discipline, evidence, traceability, actionable findings and controlled delivery. The FDSE Toolkit therefore requires operational evidence before claiming field validation.
 
 ## Validation levels
 
@@ -88,7 +88,7 @@ A specific tagged release may be marked field-proven only when:
 
 A criterion is not PASS because the operator says it passed.
 
-Every criterion requires an evidence reference: test output, artifact hash, screenshot, log excerpt, customer acceptance reference, or other controlled record.
+Every criterion requires an evidence reference: test output, artifact hash, screenshot, log excerpt, customer acceptance reference or another controlled record.
 
 Synthetic evidence must be clearly marked synthetic. Customer evidence must never be committed to this public repository.
 
@@ -102,4 +102,4 @@ Use only these states:
 - **FIELD-PROVEN** — release-specific pilot evidence and review are complete.
 - **PRODUCTION-CERTIFIED** — field-proven release plus the production release/provenance requirements in the release gate.
 
-Do not use "100% bug-free", "fully certified", or equivalent blanket claims.
+Do not use "100% bug-free", "fully certified" or equivalent blanket claims.
