@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability reporting
+    url: https://github.com/LloydCoder/Tinlance-FDSE-toolkit/security/advisories/new
+    about: Use private vulnerability reporting when available. Do not disclose sensitive details publicly.
+  - name: Tinlance
+    url: https://tinlance.com/
+    about: Commercial, licensing and company information.

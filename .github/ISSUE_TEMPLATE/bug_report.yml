@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible defect in the maintained Toolkit.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include customer evidence, credentials, private keys or sensitive vulnerability details.
+        Use SECURITY.md for security vulnerabilities.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Identify the release, commit or development state.
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command or workflow
+      description: What command or maintained workflow was executed?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide the smallest synthetic reproduction.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version and relevant package/runtime details.
+    validations:
+      required: true
