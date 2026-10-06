@@ -1,0 +1,29 @@
+# Tinlance FDSE Toolkit
+
+## Summary
+Private Forward-Deployed Security Engineer field system for authorized customer engagements.
+
+## Purpose
+Turns governed security evidence and structured upstream findings into defensible reports, incident-response playbooks, ROI analysis, secure delivery packages and offline/air-gap artifacts.
+
+## Boundaries
+- Not a customer SaaS.
+- Not a detection engine.
+- Not a compliance authority.
+- Not an autonomous execution runtime.
+- Does not replace the Tinlance Agent Platform.
+- Requires explicit authorization and scope for field operations.
+
+## Key interfaces
+- Python package: src/fdse_toolkit/
+- Canonical schemas: schemas/
+- Tests: tests/
+- Operator CLI: fdse
+- Documentation: docs/
+- CI/security/release workflows: .github/workflows/
+
+## Validation
+Engineering readiness is separate from synthetic validation, customer field pilots and production certification.
+
+## Documentation
+See README.md, docs/repository-map.md, docs/field-validation-standard.md and docs/field-pilot-runbook.md.
