@@ -48,3 +48,5 @@ jobs:
         run: pytest --cov=fdse_toolkit --cov-report=term-missing --cov-fail-under=70
       - name: Ruff check
         run: ruff check src tests
+      - name: Verify TSIC delivery-evidence conformance
+        run: python scripts/tsic_conformance.py
